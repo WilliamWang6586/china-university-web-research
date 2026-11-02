@@ -21,9 +21,14 @@
 
 ## 安装
 
+把本目录整个复制到你的 agent 技能目录（如 `~/.agent/skills/` 或所用工具的 skills 目录）：
+
 ```bash
-hermes skills install https://github.com/WilliamWang6586/hermes-skills/tree/main/china-university-web-research
+git clone https://github.com/WilliamWang6586/china-university-web-research.git
+cp -r china-university-web-research "<你的技能目录>/"
 ```
+
+放进去后，agent 读到 `SKILL.md` 即可按其中的触发条件调用。
 
 ## 文件
 
@@ -32,4 +37,3 @@ hermes skills install https://github.com/WilliamWang6586/hermes-skills/tree/main
 
 ## 说明
 
-收录于 [hermes-skills](https://github.com/WilliamWang6586/hermes-skills)。抓取时遵守目标站 robots 与访问频率限制，仅抓公开信息。
