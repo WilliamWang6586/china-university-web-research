@@ -39,7 +39,7 @@ imgs = [len(pg.get_images()) for pg in d]    # 每页有 1 张整页图 → 确�
 本次吉大计算机科学与技术学院「2027年推免生拟录取名单.pdf」即此情况（2 页、`lens=[0,0]`、`imgs=[1,1]`）。
 
 **处理**：`pg.get_pixmap(dpi=180).tobytes("png")` → base64 → 送 `qwen-vl-max`（DashScope 兼容端点）。
-- key 从 `C:\Users\王子涵\.hermes\.env` 的 `DASHSCOPE_API_KEY` 读
+- key 从 `<配置目录>/.env` 的 `DASHSCOPE_API_KEY` 读
 - **dpi 180 够用**；prompt 里明确"逐行输出、字段用 | 分隔、不遗漏、不编造"
 - 模型会自作主张加说明文字 → **用正则 `^\|([^|]+)\|([^|]+)\|([^|]+)\|([^|]*)\|$` 抽表格行，再过滤表头行**，别直接当数据用
 
