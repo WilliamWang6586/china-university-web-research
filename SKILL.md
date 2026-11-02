@@ -13,7 +13,7 @@ updated_at: "2026-09-29"
 
 # 中国高校/学会/赛会官网信息抓取与文件批量下载
 
-> 通用经验（2026-10 实测）：SPA 站点（如 internlm.intern-ai.org.cn 文档页）Jina Reader 可能超时、curl 只能拿到 Vite 壳 HTML——直接用 Hermes 内置 browser_navigate 渲染最快，snapshot 截断时从 cache\web\browser-snapshot-*.txt 续读即可。
+> 通用经验（2026-10 实测）：SPA 站点（如 internlm.intern-ai.org.cn 文档页）Jina Reader 可能超时、curl 只能拿到 Vite 壳 HTML——直接用内置 browser_navigate 渲染最快，snapshot 截断时从 cache\web\browser-snapshot-*.txt 续读即可。
 
 针对国内高校官网（webplus/动易等建站系统）的通知抓取与附件下载。以吉林大学为验证案例（2026-08 实测跑通：16个学院推免细则批量下载）。
 
