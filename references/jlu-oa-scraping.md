@@ -58,8 +58,8 @@ TIME  = re.compile(r'class="time"[^>]*>(.*?)</SPAN>', re.S | re.I)
 
 | 脚本 | 用法 |
 |---|---|
-| `D:\Hermes文件库\每日科技日报\oa_weekly.py [天数] [--section]` | 多栏目合并抓取 → 按日期分组汇总 md（存 `吉林大学相关文件\校内通知\`）<br>`--section` 额外输出 `jlu_section.txt/html` 供流水线用 |
-| `D:\Hermes文件库\每日科技日报\oa_detail.py <id...> \| --from <汇总md>` | 抓详情正文 → `校内通知\详情\*.md` |
+| `<工作目录>/scripts/oa_weekly.py [天数] [--section]` | 多栏目合并抓取 → 按日期分组汇总 md（存 `吉林大学相关文件\校内通知\`）<br>`--section` 额外输出 `jlu_section.txt/html` 供流水线用 |
+| `<工作目录>/scripts/oa_detail.py <id...> \| --from <汇总md>` | 抓详情正文 → `校内通知\详情\*.md` |
 
 ⚠️ **脚本有两个输出目录**：`OUT`（汇总存档）/ `OUT_SECTION`（jlu_section.*）。
 **`jlu_section.*` 必须落在 `每日科技日报\`**，否则 `daily_pipeline.ps1` 读不到（曾把两者混用，结果产物写进了 `校内通知\`）。
@@ -74,16 +74,16 @@ TIME  = re.compile(r'class="time"[^>]*>(.*?)</SPAN>', re.S | re.I)
 & $py -u "$out\oa_weekly.py" 2 --section *>> $log
 ```
 
-定时任务 `Hermes每日科技日报`（每天 18:30，LastTaskResult=0 为成功）指向 `daily_pipeline.ps1` —— **改脚本无需动任务**。
+定时任务 `每日科技日报任务`（每天 18:30，LastTaskResult=0 为成功）指向 `daily_pipeline.ps1` —— **改脚本无需动任务**。
 
 ## 七、微信推送脚本 push_wechat.py 三个坑（已修）
 
-任务 `Hermes每日科技日报推送`（18:35）曾 `LastTaskResult=1`，且**每天推空消息**。
+任务 `日报推送任务`（18:35）曾 `LastTaskResult=1`，且**每天推空消息**。
 症状：`✓ 已生成文字版摘要 (106 字符, 0 板块)`。
 
 ### 坑1：读错 HTML 源 → 丢吉大通知
-原 `find_latest_html()` **优先读** `~/.hermes/cron/output/tech_daily_latest.html`，但该副本由**已废弃的** `deliver_report.ps1`（只 touch 时间戳）维护，**不含**流水线前置的「吉大校内通知」。
-✅ 修复：优先读 `D:\Hermes文件库\每日科技日报\<today>\科技日报_<today>.html`（主产物），cron 副本降为最后兜底。
+原 `find_latest_html()` **优先读** `<任务输出目录>/tech_daily_latest.html`，但该副本由**已废弃的** `deliver_report.ps1`（只 touch 时间戳）维护，**不含**流水线前置的「吉大校内通知」。
+✅ 修复：优先读 `<工作目录>/scripts/<today>\科技日报_<today>.html`（主产物），cron 副本降为最后兜底。
 
 ### 坑2：提取正则失配 → 0 板块
 日报 v2 的 HTML **没有** `class="section-title"`（旧版才有）。真实层级：
@@ -126,7 +126,7 @@ if jlu_hdr:
 ## 八、验证脚本（不发消息，只校验提取）
 
 ```python
-import sys; sys.path.insert(0, r"D:\Hermes文件库\每日科技日报")
+import sys; sys.path.insert(0, r"<工作目录>/每日科技日报")
 import push_wechat as P
 p, src = P.find_latest_html(); html = open(p, encoding="utf-8").read()
 secs = P.extract_sections(html)
