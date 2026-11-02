@@ -68,7 +68,7 @@ PS 5.1 的 `Get-Content` 按 **GBK** 解 UTF-8 文件 → 中文不可逆损毁�
 
 ## 8. 临时文件自检纪律
 
-- 每轮生成的 `_xxx.py` / `_xxx_out.txt` 跑完**立刻清掉**，别在 `D:\Hermes文件库\` 根目录堆积
+- 每轮生成的 `_xxx.py` / `_xxx_out.txt` 跑完**立刻清掉**，别在 `<工作目录>/` 根目录堆积
 - 清理用 `Get-ChildItem <dir> -Filter "_xxx*" -File | Remove-Item -Force`（通配批量比逐个列举稳）
 - 脚本内嵌 `assert` 自检（三行即可），失败即暴露，比事后读日志快
 
